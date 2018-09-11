@@ -52,6 +52,7 @@ public class ProcessManager {
 		MemoryBlock lastBlock = null;
 		List<MemoryBlock> currentProcessBlock = new ArrayList<>();
 		
+		System.out.println("");
 		System.out.print("*-");
 				
 		for (int i = 0; i < this.blocks.length; i++) {
@@ -73,7 +74,7 @@ public class ProcessManager {
 				String processIdOrFreeBlock = lastBlock.isFreeBlock() ? "L" : "P" + lastBlock.getProcessId().get(); 
 				int indexOfFirstBlock = Arrays.asList(this.blocks).indexOf(currentProcessBlock.get(0));
 				
-				System.out.println(String.format(" [{0}|{1}|{2}] -", processIdOrFreeBlock, indexOfFirstBlock, currentProcessBlock.size()));
+				System.out.print(String.format(" [%s|%d|%d] -", processIdOrFreeBlock, indexOfFirstBlock, currentProcessBlock.size()));
 				
 				currentProcessBlock.clear();
 				currentProcessBlock.add(block);
@@ -83,6 +84,7 @@ public class ProcessManager {
 		} 
 		
 		System.out.println(".");
+		System.out.println("");
 	}
 	
 	public int getNextPID() {
@@ -100,7 +102,7 @@ public class ProcessManager {
 	private Optional<Integer> findPositionToStartProcess(MemoryProcess process) {
 		for (int i = 0; i < this.blocks.length; i++) {
 			
-			if (i + process.getSize() >= this.blocks.length)
+			if (i + process.getSize() > this.blocks.length)
 				return Optional.ofNullable(null);
 			
 			List<MemoryBlock> subBlock = Arrays.asList(this.blocks).subList(i, i + process.getSize());
