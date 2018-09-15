@@ -7,7 +7,7 @@ public enum Actions {
 	CriarProcesso(1, "Criar Processo"),
 	RemoverProcesso(2, "Remover Processo"),
 	ImprimirMemoria(3, "Imprimir Memória"),
-	Sair(4, "Sair");
+	Sair(0, "Sair");
 	
 	private final int action;
 	private final String actionName;
