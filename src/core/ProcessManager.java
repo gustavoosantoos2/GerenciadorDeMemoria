@@ -51,9 +51,10 @@ public class ProcessManager {
 	public void describeMemory() {
 		MemoryBlock lastBlock = null;
 		List<MemoryBlock> currentProcessBlock = new ArrayList<>();
-		
+	
 		System.out.println("");
 		System.out.print("*-");
+		
 				
 		for (int i = 0; i < this.blocks.length; i++) {
 			
@@ -71,13 +72,14 @@ public class ProcessManager {
 				if (block.equals(lastBlock))
 					currentProcessBlock.add(block);
 				
-				String processIdOrFreeBlock = lastBlock.isFreeBlock() ? "L" : "P" + lastBlock.getProcessId().get(); 
-				int indexOfFirstBlock = Arrays.asList(this.blocks).indexOf(currentProcessBlock.get(0));
-				
-				System.out.print(String.format(" [%s|%d|%d] -", processIdOrFreeBlock, indexOfFirstBlock, currentProcessBlock.size()));
+				printProcessBlock(lastBlock, currentProcessBlock);
 				
 				currentProcessBlock.clear();
 				currentProcessBlock.add(block);
+				
+				if (!block.equals(lastBlock) && i == this.blocks.length - 1) {
+					printProcessBlock(block, currentProcessBlock);
+				}
 			}
 			
 			lastBlock = block;
@@ -119,5 +121,12 @@ public class ProcessManager {
 		for (int i = startPosition; i < startPosition + process.getSize(); i++) {
 			this.blocks[i] = new MemoryBlock(process.getProcessId());
 		}
+	}
+
+	private void printProcessBlock(MemoryBlock lastBlock, List<MemoryBlock> currentProcessBlock) {
+		String processIdOrFreeBlock = lastBlock.isFreeBlock() ? "L" : "P" + lastBlock.getProcessId().get(); 
+		int indexOfFirstBlock = Arrays.asList(this.blocks).indexOf(currentProcessBlock.get(0));
+		
+		System.out.print(String.format(" [%s|%d|%d] -", processIdOrFreeBlock, indexOfFirstBlock, currentProcessBlock.size()));
 	}
 }
